@@ -19,6 +19,13 @@ const EveryMeta = value => {
 	return Object.create({
 		constructor: EveryMeta,
 		do: function(handler) {
+			if (typeof handler !== 'function') return this
+			if (typeof handler.prototype === 'undefined') {
+				let ppl = handler.toString().split('=>')
+				if (ppl.length) {
+					Every[this.name = ppl[0].trim()] = this
+				}
+			}
 			this.handler = handler
 			return this
 		}
